@@ -1,15 +1,19 @@
 package tr.com.logo.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * Created by umitvardar on 30.06.2016.
  */
 @Document
-public class Contact {
+public class Contact extends ResourceSupport {
     @Id
-    private String id;
+    @JsonProperty("id")
+    private String contactId;
     private String name;
     private String surname;
     private String phone;
@@ -18,19 +22,21 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String name, String surname, String phone, int age) {
+    @JsonCreator
+    public Contact(@JsonProperty("name") String name, @JsonProperty("surname") String surname,
+                   @JsonProperty("phone") String phone, @JsonProperty("age") int age) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.age = age;
     }
 
-    public String getId() {
-        return id;
+    public String getContactId() {
+        return contactId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
     public String getName() {
@@ -91,7 +97,7 @@ public class Contact {
     @Override
     public String toString() {
         return "Contact{" +
-                "id='" + id + '\'' +
+                "contactId='" + contactId + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
